@@ -14,7 +14,7 @@ namespace SystemBurger.Infrastructure.Repositories
 
         public IEnumerable<Produto> Get(string? descricao, byte? tipoProduto)
         {
-            var produtos = ctx.Produtos.ToList();
+            var produtos = ctx.Produto.ToList();
 
             if (descricao is not null)
                 produtos = produtos.Where(p => p.Nome.ToUpper().Contains(descricao.ToUpper()) || p.Descricao.ToUpper().Contains(descricao.ToUpper())).ToList();
@@ -27,7 +27,7 @@ namespace SystemBurger.Infrastructure.Repositories
 
         public Produto GetById(int id)
         {
-            var produto = ctx.Produtos.FirstOrDefault(p => p.Id == id);
+            var produto = ctx.Produto.FirstOrDefault(p => p.Id == id);
 
             if (produto is null)
                 throw new Exception("Produto não encontrado");
@@ -51,7 +51,7 @@ namespace SystemBurger.Infrastructure.Repositories
 
         public void Delete(int id)
         {
-            var produto = ctx.Produtos.FirstOrDefault(p => p.Id == id);
+            var produto = ctx.Produto.FirstOrDefault(p => p.Id == id);
 
             if (produto is null)
                 throw new Exception("Produto não encontrado");
