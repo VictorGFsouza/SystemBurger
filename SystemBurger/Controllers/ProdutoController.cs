@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using SystemBurger.Domain;
 using SystemBurger.Infrastructure.Repositories;
@@ -9,37 +10,46 @@ namespace SystemBurger.Controllers
     public class ProdutoController : ControllerBase
     {
         private readonly IProdutoRepository _repository;
-        public ProdutoController(IProdutoRepository repository) 
+
+        private readonly IValidator<Produto> _validator;
+
+        public ProdutoController(IProdutoRepository repository, IValidator<Produto> validator) 
         {
             _repository = repository;
+            _validator = validator;
         }
 
         [HttpGet]
         public ActionResult Get(string? descricao, byte? tipoProduto)
         {
-            _repository.Get(descricao, tipoProduto);
-            return Ok();
+            var produtos = _repository.Get(descricao, tipoProduto);
+            return Ok(produtos);
         }
 
         [HttpGet("Id")]
         public ActionResult GetById(int id)
         {
-            _repository.GetById(id);
-            return Ok();
+            return Ok(_repository.GetById(id));
         }
 
         [HttpPost]
-        public ActionResult Post(Produto produto)
+        public ActionResult Post([FromBody] Produto produto)
         {
-            _repository.Post(produto);
-            return Ok();
+            var result = _validator.Validate(produto);
+
+            if (!result.IsValid)
+                return BadRequest(result.Errors);
+
+            return Ok(_repository.Post(produto));
         }
 
         [HttpPut]
         public ActionResult Put(Produto produto)
         {
-            _repository.Put(produto);
-            return Ok();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(_repository.Put(produto));
         }
 
         [HttpDelete]
