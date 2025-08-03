@@ -56,8 +56,15 @@ namespace SystemBurger.Controllers
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-            _repository.Delete(id);
-            return Ok();
+            try
+            {
+                _repository.Delete(id);
+                return Ok("Exluído com sucesso!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
