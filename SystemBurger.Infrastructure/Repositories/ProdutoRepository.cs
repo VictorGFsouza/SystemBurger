@@ -44,7 +44,7 @@ namespace SystemBurger.Infrastructure.Repositories
 
         public Produto Put(Produto produto)
         {
-            ctx.Add(produto);
+            ctx.Update(produto);
             ctx.SaveChanges();
             return produto;
         }
@@ -57,6 +57,7 @@ namespace SystemBurger.Infrastructure.Repositories
                 throw new Exception("Produto não encontrado");
 
             ctx.Remove(produto);
+            ctx.SaveChanges();
         }
     }
 }

@@ -10,7 +10,6 @@ namespace SystemBurger.Controllers
     public class ProdutoController : ControllerBase
     {
         private readonly IProdutoRepository _repository;
-
         private readonly IValidator<Produto> _validator;
 
         public ProdutoController(IProdutoRepository repository, IValidator<Produto> validator) 
@@ -43,11 +42,13 @@ namespace SystemBurger.Controllers
             return Ok(_repository.Post(produto));
         }
 
-        [HttpPut]
-        public ActionResult Put(Produto produto)
+        [HttpPatch]
+        public ActionResult Patch([FromBody] Produto produto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            var result = _validator.Validate(produto);
+
+            if (!result.IsValid)
+                return BadRequest(result.Errors);
 
             return Ok(_repository.Put(produto));
         }
