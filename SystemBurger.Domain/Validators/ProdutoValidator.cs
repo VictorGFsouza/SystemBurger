@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SystemBurger.Domain.Dtos;
+using SystemBurger.Domain.Entities;
 
 namespace SystemBurger.Domain.Validators
 {

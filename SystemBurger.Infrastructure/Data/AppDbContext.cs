@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SystemBurger.Domain;
+using SystemBurger.Domain.Entities;
 
 namespace SystemBurger.Infrastructure.Data
 {

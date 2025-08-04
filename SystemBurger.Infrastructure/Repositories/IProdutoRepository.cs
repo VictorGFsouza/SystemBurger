@@ -1,4 +1,5 @@
-﻿using SystemBurger.Domain;
+﻿using SystemBurger.Domain.Dtos;
+using SystemBurger.Domain.Entities;
 
 namespace SystemBurger.Infrastructure.Repositories
 {
@@ -6,11 +7,11 @@ namespace SystemBurger.Infrastructure.Repositories
     {
         IEnumerable<Produto> Get(string? descricao, byte? tipoProduto);
 
-        Produto GetById(int id);
+        ProdutoDTO GetById(int id);
 
-        Produto Post(Produto produto);
+        ProdutoDTO Post(Produto produto);
 
-        Produto Put(Produto produto);
+        ProdutoDTO Put(Produto produto);
 
         void Delete(int id);
     }

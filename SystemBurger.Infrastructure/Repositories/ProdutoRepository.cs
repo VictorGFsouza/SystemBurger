@@ -1,4 +1,6 @@
-﻿using SystemBurger.Domain;
+﻿using SystemBurger.Domain.Dtos;
+using SystemBurger.Domain.Entities;
+using SystemBurger.Domain.Enums;
 using SystemBurger.Infrastructure.Data;
 
 namespace SystemBurger.Infrastructure.Repositories
@@ -25,28 +27,28 @@ namespace SystemBurger.Infrastructure.Repositories
             return produtos;
         }
 
-        public Produto GetById(int id)
+        public ProdutoDTO GetById(int id)
         {
             var produto = ctx.Produto.FirstOrDefault(p => p.Id == id);
 
             if (produto is null)
                 throw new Exception("Produto não encontrado");
 
-            return produto;
+            return FormatarProduto(produto);
         }
 
-        public Produto Post(Produto produto)
+        public ProdutoDTO Post(Produto produto)
         {
             ctx.Add(produto);
             ctx.SaveChanges();
-            return produto;
+            return FormatarProduto(produto);
         }
 
-        public Produto Put(Produto produto)
+        public ProdutoDTO Put(Produto produto)
         {
             ctx.Update(produto);
             ctx.SaveChanges();
-            return produto;
+            return FormatarProduto(produto);
         }
 
         public void Delete(int id)
@@ -58,6 +60,17 @@ namespace SystemBurger.Infrastructure.Repositories
 
             ctx.Remove(produto);
             ctx.SaveChanges();
+        }
+
+        public ProdutoDTO FormatarProduto(Produto produto)
+        {
+            return new ProdutoDTO
+            {
+                Nome = produto.Nome,
+                Descricao = produto.Descricao,
+                TipoProduto = ((TipoProduto)produto.TipoProduto).GetDisplayName(),
+                Valor = produto.Valor
+            };
         }
     }
 }

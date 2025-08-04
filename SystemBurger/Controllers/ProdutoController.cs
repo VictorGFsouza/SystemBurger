@@ -1,6 +1,7 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using SystemBurger.Domain;
+using SystemBurger.Domain.Dtos;
+using SystemBurger.Domain.Entities;
 using SystemBurger.Infrastructure.Repositories;
 
 namespace SystemBurger.Controllers
